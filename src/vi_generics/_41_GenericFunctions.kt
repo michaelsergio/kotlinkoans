@@ -19,12 +19,29 @@ fun task41(): Nothing = TODO(
         }
 )
 
-fun List<String>.partitionWordsAndLines(): Pair<List<String>, List<String>> {
-    task41()
-//    return partitionTo(ArrayList<String>(), ArrayList()) { s -> !s.contains(" ") }
+//fun <T> List<T>.partitionTo(ss: List<T>, ss2: List<T>,
+//                            predicate: (T) -> Boolean): Pair<List<T>, List<T>> {
+
+//fun <T> Collection<T>.partitionTo(ss: MutableCollection<T>, ss2: MutableCollection<T>,
+//                predicate: (T) -> Boolean): Pair<Collection<T>, Collection<T>> {
+//fun <T> Collection<T>.partitionTo(ss: MutableCollection<T>, ss2: MutableCollection<T>,
+//                                  predicate: (T) -> Boolean): Pair<Collection<T>, Collection<T>> {
+fun <U, T:MutableCollection<U>> Collection<U>.partitionTo(truecol: T, falsecol: T,
+                                                          predicate: (U) -> Boolean):
+        Pair<T, T>
+{
+    for (s in this) {
+        if (predicate(s)) truecol.add(s)
+        else falsecol.add(s)
+    }
+    return Pair(truecol, falsecol)
 }
 
+fun List<String>.partitionWordsAndLines(): Pair<List<String>, List<String>> {
+    return partitionTo(ArrayList<String>(), ArrayList()) { s -> !s.contains(" ") }
+}
+
+
 fun Set<Char>.partitionLettersAndOtherSymbols(): Pair<Set<Char>, Set<Char>> {
-    task41()
-//    return partitionTo(HashSet<Char>(), HashSet()) { c -> c in 'a'..'z' || c in 'A'..'Z'}
+    return partitionTo(HashSet<Char>(), HashSet()) { c -> c in 'a'..'z' || c in 'A'..'Z'}
 }
